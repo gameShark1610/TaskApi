@@ -13,7 +13,7 @@ public class ClassController {
     @Autowired
     private TaskRepository taskRepository;
 
-    @GetMapping("/")
+    @GetMapping
     public List<Task> getTasks(){
         return taskRepository.findAll();
     }
@@ -23,7 +23,7 @@ public class ClassController {
         return taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Task didnt found with the ID"));
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Task createTask(@RequestBody Task task){
         return taskRepository.save(task);
     }
@@ -39,8 +39,9 @@ public class ClassController {
     }
 
     @DeleteMapping("/{id}")
-    public  Task deleteTask(@PathVariable Integer id){
+    public  String deleteTask(@PathVariable Integer id){
         Task taskToDelete = taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Task didnt found with the ID"));
-        return taskToDelete;
+        taskRepository.delete(taskToDelete);
+        return "Task with id: " + id + " was eliminated";
     }
 }
