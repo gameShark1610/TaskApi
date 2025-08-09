@@ -10,8 +10,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/tasks")
 public class ClassController {
+
+    private final TaskRepository taskRepository;
+
     @Autowired
-    private TaskRepository taskRepository;
+    public ClassController(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     @GetMapping
     public List<Task> getTasks(){
