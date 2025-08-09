@@ -2,6 +2,7 @@ package com.ApiRestTasks.ApiRestTasks.controller;
 
 import com.ApiRestTasks.ApiRestTasks.model.Task;
 import com.ApiRestTasks.ApiRestTasks.repository.TaskRepository;
+import com.ApiRestTasks.ApiRestTasks.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,42 +12,37 @@ import java.util.List;
 @RequestMapping("/tasks")
 public class ClassController {
 
-    private final TaskRepository taskRepository;
+    private final TaskService taskService;
 
     @Autowired
-    public ClassController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    public ClassController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     @GetMapping
-    public List<Task> getTasks(){
-        return taskRepository.findAll();
+    public List<Task> getTasks() {
+        return taskService.getAllTasks();
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable Integer id){
-        return taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Task didnt found with the ID"));
+    public Task getTaskById(@PathVariable Integer id) {
+        return taskService.getTaskById(id);
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task){
-        return taskRepository.save(task);
+    public Task createTask(@RequestBody Task task) {
+        return taskService.createTask(task);
     }
 
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Integer id, @RequestBody Task task){
-        Task taskToUpdate = taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Task didnt found with the ID"));
-        taskToUpdate.setTitle(task.getTitle());
-        taskToUpdate.setDescription(task.getDescription());
-        taskToUpdate.setCompleted(task.isCompleted());
-        taskToUpdate.setCreatedAt(task.getCreatedAt());
-        return taskRepository.save(taskToUpdate);
+    public Task updateTask(@PathVariable Integer id, @RequestBody Task task) {
+        return taskService.updateTask(id, task);
     }
 
     @DeleteMapping("/{id}")
-    public  String deleteTask(@PathVariable Integer id){
-        Task taskToDelete = taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Task didnt found with the ID"));
-        taskRepository.delete(taskToDelete);
+    public String deleteTask(@PathVariable Integer id) {
+        taskService.deleteTask(id);
         return "Task with id: " + id + " was eliminated";
     }
+
 }
