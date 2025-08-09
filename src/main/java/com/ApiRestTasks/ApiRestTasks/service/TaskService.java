@@ -4,7 +4,7 @@ import com.ApiRestTasks.ApiRestTasks.model.Task;
 
 import java.util.List;
 
-//I thought in add a class but a good practice is use interfaces and create a carpet called imcp (interface + implementation)
+//I thought in add a class but a good practice is use interfaces and create a carpet called imcp(is short for implementation)
 public interface TaskService {
     List<Task> getAllTasks();
     Task getTaskById(Integer id);
