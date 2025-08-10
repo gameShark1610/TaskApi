@@ -9,12 +9,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
-public class ClassController {
+public class TaskController {
 
     private final TaskService taskService;
 
     @Autowired
-    public ClassController(TaskService taskService) {
+    public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
