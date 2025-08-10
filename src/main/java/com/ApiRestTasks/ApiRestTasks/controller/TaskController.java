@@ -1,7 +1,6 @@
 package com.ApiRestTasks.ApiRestTasks.controller;
 
 import com.ApiRestTasks.ApiRestTasks.model.Task;
-import com.ApiRestTasks.ApiRestTasks.repository.TaskRepository;
 import com.ApiRestTasks.ApiRestTasks.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
