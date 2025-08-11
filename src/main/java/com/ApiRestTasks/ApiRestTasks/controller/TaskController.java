@@ -1,5 +1,7 @@
 package com.ApiRestTasks.ApiRestTasks.controller;
 
+import com.ApiRestTasks.ApiRestTasks.dto.request.TaskRequestDTO;
+import com.ApiRestTasks.ApiRestTasks.dto.respone.TaskResponseDTO;
 import com.ApiRestTasks.ApiRestTasks.model.Task;
 import com.ApiRestTasks.ApiRestTasks.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,23 +26,23 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> getTasks() {
+    public List<TaskResponseDTO> getTasks() {
         return taskService.getAllTasks();
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable Integer id) {
+    public TaskResponseDTO getTaskById(@PathVariable Integer id) {
         return taskService.getTaskById(id);
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        return taskService.createTask(task);
+    public TaskResponseDTO createTask(@RequestBody TaskRequestDTO taskRequestDTO) {
+        return taskService.createTask(taskRequestDTO);
     }
 
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Integer id, @RequestBody Task task) {
-        return taskService.updateTask(id, task);
+    public TaskResponseDTO updateTask(@PathVariable Integer id, @RequestBody TaskRequestDTO taskRequestDTO) {
+        return taskService.updateTask(id, taskRequestDTO);
     }
 
     @DeleteMapping("/{id}")

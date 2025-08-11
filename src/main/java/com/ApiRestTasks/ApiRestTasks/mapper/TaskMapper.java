@@ -31,7 +31,7 @@ public class TaskMapper {
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
         task.setCompleted(dto.isCompleted());
-        task.setCreatedAt(new Date()); // o puedes manejar esto en el repositorio
+        task.setCreatedAt(new Date());
         return task;
     }
 

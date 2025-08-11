@@ -1,5 +1,7 @@
 package com.ApiRestTasks.ApiRestTasks.service;
 
+import com.ApiRestTasks.ApiRestTasks.dto.request.TaskRequestDTO;
+import com.ApiRestTasks.ApiRestTasks.dto.respone.TaskResponseDTO;
 import com.ApiRestTasks.ApiRestTasks.model.Task;
 
 import java.util.List;
@@ -12,9 +14,9 @@ Service Interface
 
 //I thought in add a class but a good practice is use interfaces and create a carpet called imcp(is short for implementation)
 public interface TaskService {
-    List<Task> getAllTasks();
-    Task getTaskById(Integer id);
-    Task createTask(Task task);
-    Task updateTask(Integer id, Task taskDetails);
+    List<TaskResponseDTO> getAllTasks();
+    TaskResponseDTO getTaskById(Integer id);
+    TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO);
+    TaskResponseDTO updateTask(Integer id, TaskRequestDTO taskRequestDTO);
     void deleteTask(Integer id);
 }
