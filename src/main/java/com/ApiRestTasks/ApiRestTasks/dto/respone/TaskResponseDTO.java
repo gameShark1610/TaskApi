@@ -2,7 +2,7 @@ package com.ApiRestTasks.ApiRestTasks.dto.respone;
 
 import java.util.Date;
 
-public class TaskRespondeDTO {
+public class TaskResponseDTO {
     private Integer id;
     private String title;
     private String description;
