@@ -1,7 +1,13 @@
 package com.ApiRestTasks.ApiRestTasks.dto.respone;
 
 import java.util.Date;
-
+/*
+ResponseDTO (Data Transfer Object)
+- Used to send data back to the client in HTTP responses.
+- Contains only the information the client needs to see, hiding internal or sensitive details.
+- Allows shaping the response independently of the Entity model, improving API stability and versioning.
+- Example: TaskResponseDTO might include id, title, description, and completed status, but exclude internal timestamps or audit fields.
+*/
 public class TaskResponseDTO {
     private Integer id;
     private String title;
