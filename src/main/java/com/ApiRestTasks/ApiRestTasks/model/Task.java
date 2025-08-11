@@ -6,7 +6,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.util.Date;
-
+/*
+Model (Entity Layer)
+- Represents the structure of the data stored in the database.
+- Each class in this layer is mapped to a database table (e.g., using JPA annotations like @Entity, @Table).
+- Contains only fields, constructors, getters/setters, and basic annotations — no business logic.
+- Direct exposure of these classes to external clients is discouraged; use DTOs to ensure data security and flexibility.
+*/
 @Entity
 public class Task {
     @Id

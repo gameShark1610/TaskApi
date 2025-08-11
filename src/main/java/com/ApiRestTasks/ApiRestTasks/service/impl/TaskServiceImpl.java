@@ -7,7 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+/*
+Service Implementation
+- Contains the actual business logic of the application.
+- Implements the methods defined in the Service Interface.
+- Interacts with the Repository Layer to retrieve and store data.
+- Acts as the middle layer between Controllers and Repositories.
+*/
 @Service
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
