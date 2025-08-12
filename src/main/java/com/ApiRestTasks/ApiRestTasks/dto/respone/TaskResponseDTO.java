@@ -1,5 +1,6 @@
 package com.ApiRestTasks.ApiRestTasks.dto.respone;
 
+import java.time.LocalDate;
 import java.util.Date;
 /*
 ResponseDTO (Data Transfer Object)
@@ -13,7 +14,7 @@ public class TaskResponseDTO {
     private String title;
     private String description;
     private boolean completed;
-    private Date createdAt;
+    private LocalDate dueDate;
 
     public Integer getId() {
         return id;
@@ -47,11 +48,11 @@ public class TaskResponseDTO {
         this.completed = completed;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
     }
 }

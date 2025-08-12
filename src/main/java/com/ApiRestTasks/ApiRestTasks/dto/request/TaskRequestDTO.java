@@ -1,4 +1,7 @@
 package com.ApiRestTasks.ApiRestTasks.dto.request;
+
+import java.time.LocalDate;
+
 /*
 RequestDTO (Data Transfer Object)
 - Used to receive and validate data sent by the client in HTTP requests.
@@ -10,7 +13,7 @@ public class TaskRequestDTO {
 
     private String title;
     private String description;
-    private boolean completed;
+    private LocalDate dueDate;
 
     public String getTitle() {
         return title;
@@ -28,11 +31,11 @@ public class TaskRequestDTO {
         this.description = description;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
     }
 }
