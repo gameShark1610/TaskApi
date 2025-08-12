@@ -56,7 +56,7 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new RuntimeException("Task not found with ID: " + id));
         task.setTitle(taskRequestDTO.getTitle());
         task.setDescription(taskRequestDTO.getDescription());
-        task.setCompleted(taskRequestDTO.isCompleted());
+        task.setDueDate(taskRequestDTO.getDueDate());
         Task updatedTask = taskRepository.save(task);
         return TaskMapper.toResponseDTO(updatedTask);
     }

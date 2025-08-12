@@ -30,6 +30,7 @@ public class TaskMapper {
         Task task = new Task();
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
+        task.setDueDate(dto.getDueDate());
         task.setCompleted(false);
         task.setCreatedAt(LocalDateTime.now());
         return task;
