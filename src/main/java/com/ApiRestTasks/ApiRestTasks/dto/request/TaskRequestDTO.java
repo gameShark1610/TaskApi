@@ -1,5 +1,10 @@
 package com.ApiRestTasks.ApiRestTasks.dto.request;
 
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 /*
@@ -10,9 +15,15 @@ RequestDTO (Data Transfer Object)
 - Example: TaskRequestDTO might include fields like title and description, excluding database-generated fields like id or createdAt.
 */
 public class TaskRequestDTO {
-
+    @NotBlank(message = "Title is required")
+    @Size(max = 100, message = "Title must be less than 100 characters")
     private String title;
+
+    @Size(max = 500)
     private String description;
+
+    @NotNull(message = "Due date is required")
+    @FutureOrPresent(message = "Due date must be today or in the future")
     private LocalDate dueDate;
 
     public String getTitle() {

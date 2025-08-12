@@ -4,6 +4,7 @@ import com.ApiRestTasks.ApiRestTasks.dto.request.TaskRequestDTO;
 import com.ApiRestTasks.ApiRestTasks.dto.respone.TaskResponseDTO;
 import com.ApiRestTasks.ApiRestTasks.model.Task;
 import com.ApiRestTasks.ApiRestTasks.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,12 +37,12 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskResponseDTO createTask(@RequestBody TaskRequestDTO taskRequestDTO) {
+    public TaskResponseDTO createTask(@Valid @RequestBody TaskRequestDTO taskRequestDTO) {
         return taskService.createTask(taskRequestDTO);
     }
 
     @PutMapping("/{id}")
-    public TaskResponseDTO updateTask(@PathVariable Integer id, @RequestBody TaskRequestDTO taskRequestDTO) {
+    public TaskResponseDTO updateTask(@PathVariable Integer id,@Valid @RequestBody TaskRequestDTO taskRequestDTO) {
         return taskService.updateTask(id, taskRequestDTO);
     }
 
