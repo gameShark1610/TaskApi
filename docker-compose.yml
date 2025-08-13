@@ -22,10 +22,10 @@ services:
       - mysql
     ports:
       - "8080:8080"
+    env_file:
+      - .env.docker
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tasks_db
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_PROFILES_ACTIVE: docker
     restart: always
 
 volumes:
