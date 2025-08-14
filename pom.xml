@@ -56,6 +56,12 @@
 			<artifactId>mockito-junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Is needed for use LocalDate in TaskControllerTest because is not supported by default -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.13.4</version>
+		</dependency>
 		<!-- Dependencies to use Validation -->
 		<dependency>
 			<groupId>jakarta.validation</groupId>

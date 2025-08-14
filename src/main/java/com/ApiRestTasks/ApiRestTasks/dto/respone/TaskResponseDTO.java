@@ -16,6 +16,16 @@ public class TaskResponseDTO {
     private boolean completed;
     private LocalDate dueDate;
 
+    public TaskResponseDTO() {
+    }
+
+    public TaskResponseDTO(Integer id, String title, String description, LocalDate dueDate) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+    }
+
     public Integer getId() {
         return id;
     }
