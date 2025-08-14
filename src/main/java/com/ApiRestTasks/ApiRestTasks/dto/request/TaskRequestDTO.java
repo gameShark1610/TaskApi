@@ -26,6 +26,12 @@ public class TaskRequestDTO {
     @FutureOrPresent(message = "Due date must be today or in the future")
     private LocalDate dueDate;
 
+    public TaskRequestDTO(String title, String description, LocalDate dueDate) {
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -49,4 +55,6 @@ public class TaskRequestDTO {
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
+
+
 }

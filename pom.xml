@@ -44,10 +44,16 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
+		<!-- Spring Boot testing starter (includes JUnit 5, AssertJ, Hamcrest, MockMvc, JSON assert, etc.) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- Mockito JUnit 5 integration (needed for @ExtendWith(MockitoExtension.class)) -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<!-- Dependencies to use Validation -->
@@ -70,7 +76,6 @@
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>2.5.0</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>

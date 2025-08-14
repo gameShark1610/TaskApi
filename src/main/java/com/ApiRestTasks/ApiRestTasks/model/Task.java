@@ -34,6 +34,16 @@ public class Task {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    public Task() {
+    }
+
+    public Task(Integer id, String title, String description, LocalDate dueDate, boolean completed) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.completed = completed;
+    }
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
