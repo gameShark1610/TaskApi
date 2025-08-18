@@ -2,8 +2,14 @@ package com.ApiRestTasks.ApiRestTasks.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
 /*
 SecurityConfig class is where you:
 - Configure authentication (who are you? → username/password, JWT, OAuth, etc.)
@@ -12,7 +18,23 @@ SecurityConfig class is where you:
 - Register beans like PasswordEncoder.
 */
 @Configuration
+@EnableWebSecurity //Enables Spring Security’s web security support and allows you to customize it.
 public class SecurityConfig {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                // Configures CSRF protection.
+                .csrf(csrf-> csrf.disable()) //Disables CSRF protection — this is common in stateless APIs (like those using JWT), where CSRF is not needed.
+                //Defines access rules for HTTP requests.
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/**").permitAll() //  Allows unauthenticated access to any endpoint starting with /auth/ (e.g., login, register).
+                        .anyRequest().authenticated() //Requires authentication for all other endpoints.
+                )
+                //Configures how sessions are handled.
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); //Tells Spring Security not to create or use HTTP sessions — perfect for JWT-based authentication.
+        return http.build(); //Builds and returns the configured SecurityFilterChain.
+
+    }
 
     /*
     When you create a new encoder: new BCryptPasswordEncoder();
