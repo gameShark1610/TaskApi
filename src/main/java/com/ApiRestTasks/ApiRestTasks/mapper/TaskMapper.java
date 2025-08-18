@@ -23,6 +23,7 @@ public class TaskMapper {
         dto.setTitle(task.getTitle());
         dto.setDescription(task.getDescription());
         dto.setCompleted(task.isCompleted());
+        dto.setDueDate(task.getDueDate());
         return dto;
     }
 
