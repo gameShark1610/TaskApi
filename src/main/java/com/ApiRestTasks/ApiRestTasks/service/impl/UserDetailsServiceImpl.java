@@ -3,8 +3,8 @@ package com.ApiRestTasks.ApiRestTasks.service.impl;
 import com.ApiRestTasks.ApiRestTasks.model.User;
 import com.ApiRestTasks.ApiRestTasks.repository.UserRepository;
 import com.ApiRestTasks.ApiRestTasks.security.UserPrincipal;
-import com.ApiRestTasks.ApiRestTasks.service.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 /*

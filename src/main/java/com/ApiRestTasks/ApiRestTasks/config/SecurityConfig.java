@@ -1,14 +1,19 @@
 package com.ApiRestTasks.ApiRestTasks.config;
 
+import com.ApiRestTasks.ApiRestTasks.security.JwtAuthenticationEntryPoint;
+import com.ApiRestTasks.ApiRestTasks.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /*
 SecurityConfig class is where you:
@@ -20,18 +25,31 @@ SecurityConfig class is where you:
 @Configuration
 @EnableWebSecurity //Enables Spring Security’s web security support and allows you to customize it.
 public class SecurityConfig {
+
+    private final JwtAuthenticationEntryPoint entryPoint;
+    private final JwtAuthenticationFilter jwtFilter;
+
+    public SecurityConfig(JwtAuthenticationEntryPoint entryPoint, JwtAuthenticationFilter jwtFilter) {
+        this.entryPoint = entryPoint;
+        this.jwtFilter = jwtFilter;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 // Configures CSRF protection.
                 .csrf(csrf-> csrf.disable()) //Disables CSRF protection — this is common in stateless APIs (like those using JWT), where CSRF is not needed.
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(entryPoint))
                 //Defines access rules for HTTP requests.
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll() //  Allows unauthenticated access to any endpoint starting with /auth/ (e.g., login, register).
+                        .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll() //  Allows unauthenticated access to any endpoint starting with /auth/ (e.g., login, register).
                         .anyRequest().authenticated() //Requires authentication for all other endpoints.
                 )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                //.httpBasic(Customizer.withDefaults())
                 //Configures how sessions are handled.
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); //Tells Spring Security not to create or use HTTP sessions — perfect for JWT-based authentication.
+
         return http.build(); //Builds and returns the configured SecurityFilterChain.
 
     }
@@ -48,7 +66,12 @@ public class SecurityConfig {
     */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(-1);
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
 }

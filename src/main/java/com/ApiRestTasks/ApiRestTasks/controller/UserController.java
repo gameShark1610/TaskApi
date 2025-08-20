@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/auth/user")
 public class UserController {
     private final UserService userService;
 
@@ -23,12 +23,4 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> getUserByUsername(@PathVariable String username) {
         return ResponseEntity.ok(userService.getUserByUsername(username)); //200 OK
     }
-
-    @PostMapping("/register")
-    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(userService.createUser(userRequestDTO)); //201 created
-    }
-
 }
