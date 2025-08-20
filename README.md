@@ -7,10 +7,8 @@ Builted with **Spring Boot**, **MySQL**, and **Docker**.
 
 - RESTful API using Spring Boot
 - JWT-based authentication
-- User model and role-based access control
 - Secure endpoints with Spring Security
 - Clean architecture and best practices
-- Future deployment plans using Azure
 
 ## Prerequisites
 
@@ -37,6 +35,7 @@ cd TaskApi
 $env:SPRING_DATASOURCE_URL="jdbc:mysql://localhost:3306/mydb"
 $env:SPRING_DATASOURCE_USERNAME="root"
 $env:SPRING_DATASOURCE_PASSWORD="1234"
+$env:JWT_SECRET="your-256bit-or-longer-jwt-secret"
 ```
 
 3. **Build and run the app**
@@ -66,6 +65,7 @@ Create `.env` files for different environments:
 SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/mydb
 SPRING_DATASOURCE_USERNAME=root
 SPRING_DATASOURCE_PASSWORD=1234
+SECRET=your-256bit-or-longer-jwt-secret
 ```
 
 * **Docker MySQL** (`.env.docker`):
@@ -74,6 +74,7 @@ SPRING_DATASOURCE_PASSWORD=1234
 SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/mydb
 SPRING_DATASOURCE_USERNAME=root
 SPRING_DATASOURCE_PASSWORD=1234
+SECRET=your-256bit-or-longer-jwt-secret
 ```
 
 > You can also create `.env.template` with placeholders for collaborators.
@@ -100,6 +101,7 @@ spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}
 $env:SPRING_DATASOURCE_URL="jdbc:mysql://localhost:3306/mydb"
 $env:SPRING_DATASOURCE_USERNAME="root"
 $env:SPRING_DATASOURCE_PASSWORD="1234"
+$env:JWT_SECRET="your-256bit-or-longer-jwt-secret"
 ```
 
 **IDE (faster, per run configuration)**
@@ -150,27 +152,121 @@ or, if using Springdoc:
 ```
 http://localhost:8080/swagger-ui/index.html
 ```
-
 ---
 
 ## API Endpoints
 
-| Method | Endpoint    | Description             |
-| ------ | ----------- | ----------------------- |
-| GET    | /tasks      | List all tasks          |
-| GET    | /tasks/{id} | Get task by ID          |
-| POST   | /tasks      | Create a new task       |
-| PUT    | /tasks/{id} | Update an existing task |
-| DELETE | /tasks/{id} | Delete a task           |
+### Auth
+| Method | Endpoint       | Description             | Auth Required |
+| ------ | -------------- | ----------------------- | ------------- |
+| POST   | /auth/register | Register a new user     | No            |
+| POST   | /auth/login    | Login and receive JWT   | No            |
+
+### Tasks
+| Method | Endpoint       | Description             | Auth Required |
+| ------ | -------------- | ----------------------- | ------------- |
+| GET    | /tasks         | List all tasks          | Yes           |
+| GET    | /tasks/{id}    | Get task by ID          | Yes           |
+| POST   | /tasks         | Create a new task       | Yes           |
+| PUT    | /tasks/{id}    | Update an existing task | Yes           |
+| DELETE | /tasks/{id}    | Delete a task           | Yes           |
+
+### User
+| Method | Endpoint          | Description      | Auth Required |
+|--------|-------------------|------------------|---------------|
+| GET    | /user/{username}} | Get the username | Yes           |
 
 ---
 
-## Notes
+## Authentication
+### Swagger
+* Use `/auth/register` to create a new user.
+* Use `/auth/login` to obtain a **JWT token**.
+* Include the JWT in the **Authorization header** for protected endpoints:
 
-* `.env` files separate local vs Docker environments
-* Powershell or IDE environment variables make testing faster
-* OpenAPI/Swagger provides an easy way to explore and test your API
+```
+Authorization: Bearer <your-JWT-here>
+```
+
+### Postman Quick Guide
+
+1. **Login to get a JWT**
+
+* **Endpoint:** `POST /auth/login`
+* **Body (JSON):**
+
+```json
+{
+  "username": "your_username",
+  "password": "your_password"
+}
+```
+
+* **Response (JSON):**
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+}
+```
+
+> Copy the value of `"token"` — this is your JWT.
 
 ---
 
-### Authentication (planned)
+2. **Use JWT to access protected endpoints**
+
+* Go to the **Headers** tab in Postman for any protected endpoint (e.g., `/tasks`)
+* Add a header:
+
+```
+Key: Authorization
+Value: Bearer <your-JWT-here>
+```
+
+* Example:
+
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6...
+```
+
+* Send the request. If the token is valid, you’ll get a successful response.
+* If missing or invalid → `401 Unauthorized`.
+
+---
+
+## 📝 Notes
+
+* **Environment variables**:
+
+    * Use `.env` files to separate local vs Docker environments (`.env.local`, `.env.docker`).
+    * Always set a strong `SECRET` for JWT signing (256-bit or longer).
+    * IDE environment variables override session variables—useful for switching environments quickly.
+
+* **JWT Authentication**:
+
+    * `/auth/register` → create a new user.
+    * `/auth/login` → returns a JWT token.
+    * Protected endpoints require `Authorization: Bearer <JWT>` header.
+    * Tokens are typically **short-lived**; login again to refresh.
+    * Store tokens securely in Postman or frontend apps.
+
+* **Postman / Swagger Testing**:
+
+    * Postman: set JWT in Authorization header to test protected endpoints.
+    * Swagger UI: configure security scheme to use JWT via **Authorize button**.
+    * Both tools make testing and exploration of your API easier.
+
+* **Security**:
+
+    * Passwords are hashed with Bcrypt for safe storage.
+    * JWT ensures secure access to endpoints without exposing passwords.
+    * Always use HTTPS in production to protect tokens in transit.
+
+* **Development tips**:
+
+    * Use `./mvnw clean install` and `./mvnw spring-boot:run` for consistent builds.
+    * Docker helps replicate environments across machines.
+    * Keep README updated for collaborators to test and use the API easily.
+
+
