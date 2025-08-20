@@ -1,7 +1,7 @@
 package com.ApiRestTasks.ApiRestTasks.security;
 
+import com.ApiRestTasks.ApiRestTasks.model.User;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
