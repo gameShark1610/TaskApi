@@ -4,6 +4,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -15,6 +16,7 @@ Responsibilities:
 - Validate tokens for authenticity and expiration.
 - Extract username or user ID from a token.
 */
+@Component
 public class JwtTokenProvider {
     @Value("${app.jwtSecret}")
     private String jwtSecret;
